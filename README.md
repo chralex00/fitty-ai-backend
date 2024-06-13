@@ -53,7 +53,7 @@ The `env_example` file is an example contains a simple template of the `.env` fi
 
 The contents of the .env file must include the following env variables:
 - `MICROSERVICE_PORT` (required, `int`): the listening port, preferably between `8000` and `9000`, like `8080`, or `8090`.
-- `MICROSERVICE_NAME` (required, `str`): the descriptive name of the microservice, or the brand name, like `fitty-ai`.
+- `MICROSERVICE_NAME` (required, `str`): the descriptive name of the microservice, or the brand name, like `fitty-ai-backend`.
 - `MICROSERVICE_VERSION` (required, `str`): the microservice's version, strictly respecting semver (semantic versioning), like `v0.0.1-rc.1`.
 - `MICROSERVICE_API_PREFIX` (required, `str`): the API's prefix exposed by this microserfice, like `/api`, or `/api/v1`.
 - `MICROSERVICE_WEB_WORKERS` (optional, `int`): the number of web workers (or web processes). In local environment it should be set to `1`. Default value is `1`.
@@ -62,8 +62,8 @@ The contents of the .env file must include the following env variables:
 - `MODELS_CRONJOB_REPEATED_EVERY` (required, int): an int values that specifies the time interval (expressed in seconds) between the cronjob execution and the next, like `10`, `30`, or `60`.
 
 The following env variables are used for docker:
-- `DOCKER_MICROSERVICE_IMAGE_NAME` (optional for local env, required for docker): the docker image name, like `fitty-ai`.
-- `DOCKER_MICROSERVICE_CONTAINER_NAME` (optional for local env, required for docker): the docker container name, like `fitty-ai`.
+- `DOCKER_MICROSERVICE_IMAGE_NAME` (optional for local env, required for docker): the docker image name, like `fitty-ai-backend`.
+- `DOCKER_MICROSERVICE_CONTAINER_NAME` (optional for local env, required for docker): the docker container name, like `fitty-ai-backend`.
 - `DOCKER_MICROSERVICE_CONTAINER_EXPOSED_PORT` (optional for local env, required for docker): the listening port of the docker container, like `8090`, or `9000`.
 - `DOCKER_MONGODB_CONTAINER_EXPOSED_PORT` (optional for local env, required for docker): the listening port of the MongoDB docker container name, like `28018`.
 - `DOCKER_MONGOEXPRESS_CONTAINER_EXPOSED_PORT` (optional for local env, required for docker): the listening port of the Mongo Express docker container name, like `8082`.

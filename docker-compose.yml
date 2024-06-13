@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  fitty-ai:
+  fitty-ai-backend:
     build:
       context: .
     image: ${DOCKER_MICROSERVICE_IMAGE_NAME}

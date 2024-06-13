@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0b3eaf38-ba16-4009-bd82-042795492e6d",
-		"name": "fitty-ai",
+		"name": "fitty-ai-backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "10313594"
 	},
@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"REGRESSION\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,7 +48,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"CLASSIFICATION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ]\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"CLASSIFICATION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": \"666a9e186c923cea7de92db8\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -80,7 +80,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,7 +136,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ]\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LINEAR_REGRESSION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": null\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -158,7 +158,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "666899e5500a2d2e60999934"
+									"value": "666a9e7b667f441efbc3c85a"
 								}
 							]
 						}
@@ -288,7 +288,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66697a4f3c43827f99f7e3af"
+									"value": "666a9e186c923cea7de92db8"
 								}
 							]
 						}
@@ -315,7 +315,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "666972045d1bb488c17d7108"
+									"value": "666a9e186c923cea7de92db8"
 								}
 							]
 						}
