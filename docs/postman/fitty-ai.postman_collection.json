@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "0b3eaf38-ba16-4009-bd82-042795492e6d",
+		"name": "fitty-ai",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10313594"
+	},
+	"item": [
+		{
+			"name": "models",
+			"item": [
+				{
+					"name": "count many",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"REGRESSION\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/count",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create one",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"CLASSIFICATION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search many",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/search",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/find/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"find",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66696438fea8d65769c73a12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/update/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "666899e5500a2d2e60999934"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/delete/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "666963b7fea8d65769c73a11"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "datasets",
+			"item": [
+				{
+					"name": "count many",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/count",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create one",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/create",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload one dataset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/christian.alessandro.atzeni/Library/CloudStorage/OneDrive-EY/Desktop/BenchmarkteingTrain/bankmarketing_train.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/upload/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"upload",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66697a4f3c43827f99f7e3af"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "load one dataset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/load/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"load",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "666972045d1bb488c17d7108"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search many",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/search",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/find/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"find",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "666962cb4811d6c75f119121"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/update/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "666962cb4811d6c75f119121"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/datasets/delete/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"datasets",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6669626ddf065080d46b1b54"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/v1/healthcheck",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

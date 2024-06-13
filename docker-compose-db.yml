@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:3.6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+     - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+     - ./mongoData:/data/db
+    ports:
+     - ${DOCKER_MONGODB_CONTAINER_EXPOSED_PORT}:27017
+  mongo-express:
+    image: mongo-express:0.54.0
+    restart: always
+    ports:
+      - ${DOCKER_MONGOEXPRESS_CONTAINER_EXPOSED_PORT}:8081
+    environment:
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+      ME_CONFIG_MONGODB_AUTH_USERNAME: user 
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: password
+      ME_CONFIG_MONGODB_AUTH_DATABASE: fittyaidb
+      ME_CONFIG_BASICAUTH_USERNAME: user
+      ME_CONFIG_BASICAUTH_PASSWORD: password

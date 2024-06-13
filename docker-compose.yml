@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  fitty-ai:
+    build:
+      context: .
+    image: ${DOCKER_MICROSERVICE_IMAGE_NAME}
+    container_name: ${DOCKER_MICROSERVICE_CONTAINER_NAME}
+    restart: always
+    ports:
+      - ${DOCKER_MICROSERVICE_CONTAINER_EXPOSED_PORT}:80
+    env_file:
+      .env
