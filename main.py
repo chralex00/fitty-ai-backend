@@ -4,7 +4,7 @@ from src.utilities.env_vars import ENV_VARS
 from src.controllers.healthcheck import healthcheck_router
 from src.controllers.model import model_router
 from src.controllers.dataset import dataset_router
-from src.managers.training_process import TRAINING_PROCESS_MANAGER
+from src.managers.training_process_manager import TRAINING_PROCESS_MANAGER
 from fastapi_utilities import repeat_every
 
 app = FastAPI()
@@ -16,7 +16,7 @@ app.include_router(dataset_router, prefix = ENV_VARS.MICROSERVICE_API_PREFIX)
 @app.on_event("startup")
 @repeat_every(wait_first = 5, seconds = ENV_VARS.MODELS_CRONJOB_REPEATED_EVERY)
 async def manage_models_cronjob():
-    if TRAINING_PROCESS_MANAGER.running == False:
+    if (ENV_VARS.MODELS_CRONJOB_ENABLED == True) and (TRAINING_PROCESS_MANAGER.running == False):
         await TRAINING_PROCESS_MANAGER.training_process()
 
 if __name__ == "__main__":

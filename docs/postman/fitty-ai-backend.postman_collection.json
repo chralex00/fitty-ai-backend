@@ -122,7 +122,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66696438fea8d65769c73a12"
+									"value": "667431118785d2e37f2110e1"
 								}
 							]
 						}
@@ -136,7 +136,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"description\": \"A classification model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LINEAR_REGRESSION\",\n    \"tags\": [ \"test\", \"classification\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": null\n}",
+							"raw": "{\n    \"name\": \"MyTestingRegressionModel\",\n    \"description\": \"A regression model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LINEAR_REGRESSION\",\n    \"tags\": [ \"test\", \"regression\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": null\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -158,7 +158,34 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "666a9e7b667f441efbc3c85a"
+									"value": "667431118785d2e37f2110e1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "start training process",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/models/start-training-process/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"models",
+								"start-training-process",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "667430ff8785d2e37f2110e0"
 								}
 							]
 						}
@@ -207,7 +234,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"primary_key_column_name\": \"id\",\n    \"target_column_name\": \"y\",\n    \"test_samples_size_min\": 0.25,\n    \"test_samples_size_max\": 0.55,\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -236,7 +263,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ]\n}",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ],\n    \"primary_key_column_name\": \"id\",\n    \"target_column_name\": \"y\",\n    \"test_samples_size\": 0.25\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -269,7 +296,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/christian.alessandro.atzeni/Library/CloudStorage/OneDrive-EY/Desktop/BenchmarkteingTrain/bankmarketing_train.csv"
+									"src": "/Users/christian.alessandro.atzeni/Downloads/diabetes.csv"
 								}
 							]
 						},
@@ -288,7 +315,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "666a9e186c923cea7de92db8"
+									"value": "667423e0198aec376aa4ac59"
 								}
 							]
 						}
@@ -332,7 +359,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"type\": \"CSV\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"primary_key_column_name\": \"id\",\n    \"target_column_name\": \"y\",\n    \"test_samples_size_min\": 0.25,\n    \"test_samples_size_max\": 0.55,\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -388,7 +415,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ]\n}",
+							"raw": "{\n    \"name\": \"MyTestingDataset\",\n    \"description\": \"A generic dataset for testing purposes\",\n    \"tags\": [ \"test\", \"classification\", \"dataset\", \"ai\" ],\n    \"primary_key_column_name\": \"id\",\n    \"target_column_name\": \"y\",\n    \"test_samples_size\": 0.55\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -410,7 +437,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "666962cb4811d6c75f119121"
+									"value": "666a9e186c923cea7de92db8"
 								}
 							]
 						}

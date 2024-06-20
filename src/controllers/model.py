@@ -13,7 +13,7 @@ import logging
 from datetime import datetime
 from ..utilities.check_model_type import check_model_type
 from ..utilities.check_model_status import check_model_status
-from bson import ObjectId
+from ..constants.constants import NOT_FOUND_HTTP_EXCEPTION, INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 model_router = APIRouter()
 
@@ -30,11 +30,7 @@ async def count_many(model_query_config: ModelQueryConfig = Body()) -> JSONRespo
         return JSONResponse(content = jsonable_encoder(result))
     except Exception as error:
         logging.error(f"Error occurred during the Model retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @model_router.post(
     "/models/create",
@@ -54,11 +50,7 @@ async def create_one(createModelDto: CreateModelDto = Body()) -> JSONResponse:
                 dataset_found = await find_one_dataset(createModelDto.dataset_id)
                 dataset_id = dataset_found["_id"] if dataset_found != None else None
             except:
-                raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                    "status_code": status.HTTP_404_NOT_FOUND,
-                    "message": "NOT FOUND",
-                    "error": True
-                })
+                raise NOT_FOUND_HTTP_EXCEPTION
 
         model = Model(
             name = createModelDto.name,
@@ -79,11 +71,40 @@ async def create_one(createModelDto: CreateModelDto = Body()) -> JSONResponse:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred during the Model creation: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
+    
+@model_router.patch(
+    "/models/start-training-process/{id}",
+    response_description = "Start training process of a model by ID",
+    response_model = Model,
+    status_code = status.HTTP_200_OK,
+    response_model_by_alias = False
+)
+async def start_training_process(id: str) -> JSONResponse:
+    try:
+        model_found = await find_one_model(id)
+
+        if model_found is None:
+            raise NOT_FOUND_HTTP_EXCEPTION
+        
+        check_model_status(model_found["status"])
+        
+        updated_model = await update_one_model(id, {
+            "status": ModelStatus.PROCESS_STARTED
         })
+
+        if updated_model == None:
+            raise NOT_FOUND_HTTP_EXCEPTION
+
+        updated_model["_id"] = str(updated_model["_id"])
+        updated_model["dataset_id"] = str(updated_model["dataset_id"])
+        
+        return JSONResponse(content = jsonable_encoder(updated_model))
+    except HTTPException as http_exception:
+        raise http_exception
+    except Exception as error:
+        logging.error(f"Error occurred starting the Model training process: {error}")
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @model_router.get(
     "/models/search",
@@ -103,11 +124,7 @@ async def search_many(model_query_config: ModelQueryConfig = Body()) -> JSONResp
         }))
     except Exception as error:
         logging.error(f"Error occurred during the Model retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @model_router.get(
     "/models/find/{id}",
@@ -121,22 +138,14 @@ async def find_one(id: str) -> JSONResponse:
         found_model = await find_one_model(id)
 
         if found_model is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
         
         return JSONResponse(content = jsonable_encoder(found_model))
     except HTTPException as http_exception:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred during the Model retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @model_router.patch(
     "/models/update/{id}",
@@ -152,11 +161,7 @@ async def update_one(id: str, updateModelDto: UpdateModelDto = Body()) -> JSONRe
         model_found = await find_one_model(id)
 
         if model_found == None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
 
         check_model_status(model_found["status"])
 
@@ -172,22 +177,14 @@ async def update_one(id: str, updateModelDto: UpdateModelDto = Body()) -> JSONRe
                 dataset_found = await find_one_dataset(updateModelDto.dataset_id)
                 dataset_id = dataset_found["_id"] if dataset_found != None else None
             except:
-                raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                    "status_code": status.HTTP_404_NOT_FOUND,
-                    "message": "NOT FOUND",
-                    "error": True
-                })
+                raise NOT_FOUND_HTTP_EXCEPTION
 
         dict_without_none_values["dataset_id"] = dataset_id
 
         updated_model = await update_one_model(id, dict_without_none_values)
 
         if updated_model == None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
         
         updated_model["_id"] = str(updated_model["_id"])
         updated_model["dataset_id"] = str(updated_model["dataset_id"])
@@ -197,11 +194,7 @@ async def update_one(id: str, updateModelDto: UpdateModelDto = Body()) -> JSONRe
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred updating the Model: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @model_router.delete(
     "/models/delete/{id}",
@@ -212,24 +205,18 @@ async def update_one(id: str, updateModelDto: UpdateModelDto = Body()) -> JSONRe
 )
 async def delete_one(id: str) -> JSONResponse:
     try:
-        found_model = await delete_one_model(id)
+        model_found = await delete_one_model(id)
 
-        if found_model is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+        if model_found is None:
+            raise NOT_FOUND_HTTP_EXCEPTION
         
-        found_model["_id"] = str(found_model["_id"])
+        check_model_status(model_found["status"])
+        
+        model_found["_id"] = str(model_found["_id"])
 
-        return JSONResponse(content = jsonable_encoder(found_model))
+        return JSONResponse(content = jsonable_encoder(model_found))
     except HTTPException as http_exception:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred during the Model deletion: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION

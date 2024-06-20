@@ -2,6 +2,7 @@ from fastapi import APIRouter, status, HTTPException
 from ..utilities.env_vars import ENV_VARS
 from typing import Dict
 import logging
+from ..constants.constants import INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 healthcheck_router = APIRouter()
 
@@ -15,8 +16,4 @@ async def healthcheck() -> Dict[str, str | int]:
         }
     except Exception as error:
         logging.error(f"Error occurred during the Model creation: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION

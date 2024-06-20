@@ -10,8 +10,8 @@ from time import time
 from ..services.dataset import update_one as update_one_dataset, search_many as search_many_datasets, create_one as create_dataset, find_one as find_one_dataset, delete_one as delete_one_dataset, count_many as count_many_datasets
 import logging
 from datetime import datetime
-from typing import Annotated
 from ..utilities.mongo_connection import GRIDFS_MONGODB
+from ..constants.constants import NOT_FOUND_HTTP_EXCEPTION, INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 dataset_router = APIRouter()
 
@@ -28,11 +28,7 @@ async def count_many(dataset_query_config: DatasetQueryConfig = Body()) -> JSONR
         return JSONResponse(content = jsonable_encoder(result))
     except Exception as error:
         logging.error(f"Error occurred during the Dataset retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.post(
     "/datasets/create",
@@ -47,6 +43,9 @@ async def create_one(createDatasetDto: CreateDatasetDto = Body()) -> JSONRespons
             name = createDatasetDto.name,
             description = createDatasetDto.description,
             tags = list(createDatasetDto.tags),
+            primary_key_column_name = createDatasetDto.primary_key_column_name,
+            target_column_name = createDatasetDto.target_column_name,
+            test_samples_size = createDatasetDto.test_samples_size,
             created_at = datetime.fromtimestamp(int(time())),
             updated_at = datetime.fromtimestamp(int(time()))
         )
@@ -56,11 +55,7 @@ async def create_one(createDatasetDto: CreateDatasetDto = Body()) -> JSONRespons
         return JSONResponse(content = jsonable_encoder(created_dataset))
     except Exception as error:
         logging.error(f"Error occurred during the Dataset creation: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
     
 @dataset_router.post(
     "/datasets/upload/{id}",
@@ -86,11 +81,7 @@ async def upload_dataset(id: str, file: UploadFile) -> JSONResponse:
         found_dataset = await find_one_dataset(id)
 
         if found_dataset is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
 
         file_id = GRIDFS_MONGODB.put(file.file)
 
@@ -109,11 +100,7 @@ async def upload_dataset(id: str, file: UploadFile) -> JSONResponse:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred uploading the Dataset: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.get(
     "/datasets/search",
@@ -127,17 +114,19 @@ async def search_many(dataset_query_config: DatasetQueryConfig = Body()) -> JSON
         countResult = await count_many_datasets(dataset_query_config)
         searchResults = await search_many_datasets(dataset_query_config)
 
+        print(searchResults)
+
+        for result in searchResults:
+            result["_id"] = str(result["_id"])
+            result["file_object_id"] = str(result["file_object_id"])
+
         return JSONResponse(content = jsonable_encoder({
             "count": countResult["count"],
             "results": searchResults
         }))
     except Exception as error:
         logging.error(f"Error occurred during the Dataset retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.get(
     "/datasets/find/{id}",
@@ -151,22 +140,14 @@ async def find_one(id: str) -> JSONResponse:
         found_dataset = await find_one_dataset(id)
 
         if found_dataset is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
         
         return JSONResponse(content = jsonable_encoder(found_dataset))
     except HTTPException as http_exception:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred during the Dataset retrieving: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.get(
     "/datasets/load/{id}",
@@ -178,11 +159,7 @@ async def load_dataset(id: str) -> JSONResponse:
         found_dataset = await find_one_dataset(id)
 
         if found_dataset is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
 
         file_content = GRIDFS_MONGODB.get(found_dataset["file_object_id"]).read()
 
@@ -194,11 +171,7 @@ async def load_dataset(id: str) -> JSONResponse:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred uploading the Dataset: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.patch(
     "/datasets/update/{id}",
@@ -217,24 +190,17 @@ async def update_one(id: str, updateDatasetDto: UpdateDatasetDto = Body()) -> JS
         updated_dataset = await update_one_dataset(id, dict_without_none_values)
 
         if updated_dataset == None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
         
         updated_dataset["_id"] = str(updated_dataset["_id"])
+        updated_dataset["file_object_id"] = str(updated_dataset["file_object_id"])
         
         return JSONResponse(content = jsonable_encoder(updated_dataset))
     except HTTPException as http_exception:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred updating the Dataset: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 @dataset_router.delete(
     "/datasets/delete/{id}",
@@ -248,11 +214,7 @@ async def delete_one(id: str) -> JSONResponse:
         found_dataset = await delete_one_dataset(id)
 
         if found_dataset is None:
-            raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = {
-                "status_code": status.HTTP_404_NOT_FOUND,
-                "message": "NOT FOUND",
-                "error": True
-            })
+            raise NOT_FOUND_HTTP_EXCEPTION
         
         found_dataset["_id"] = str(found_dataset["_id"])
         
@@ -261,8 +223,4 @@ async def delete_one(id: str) -> JSONResponse:
         raise http_exception
     except Exception as error:
         logging.error(f"Error occurred during the Dataset deletion: {error}")
-        raise HTTPException(status_code = status.HTTP_500_INTERNAL_SERVER_ERROR, detail = {
-            "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-            "message": "INTERNAL SERVER ERROR",
-            "error": True
-        })
+        raise INTERNAL_SERVER_ERROR_HTTP_EXCEPTION

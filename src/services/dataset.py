@@ -24,6 +24,20 @@ async def count_many(dataset_query_config: DatasetQueryConfig) -> Dict[str, any]
         if dataset_query_config.tags != None:
             count_query["tags"] = { "$in": list(dataset_query_config.tags) }
 
+        if dataset_query_config.primary_key_column_name != None:
+            count_query["primary_key_column_name"] = { "$regex": dataset_query_config.primary_key_column_name, "$options": "i" }
+        
+        if dataset_query_config.target_column_name != None:
+            count_query["target_column_name"] = { "$regex": dataset_query_config.target_column_name, "$options": "i" }
+
+        if (dataset_query_config.test_samples_size_min != None) or (dataset_query_config.test_samples_size_max != None):
+            test_samples_size_min = dataset_query_config.test_samples_size_min or 0
+            test_samples_size_max = dataset_query_config.test_samples_size_max or 1
+            count_query["test_samples_size"] = {
+                "$gte": test_samples_size_min,
+                "$lte": test_samples_size_max
+            }
+
         if (dataset_query_config.created_at_min != None) or (dataset_query_config.created_at_max != None):
             created_at_min = datetime.fromtimestamp(dataset_query_config.created_at_min or 0)
             created_at_max = datetime.fromtimestamp(dataset_query_config.created_at_max or int(time()))
@@ -73,6 +87,20 @@ async def search_many(dataset_query_config: DatasetQueryConfig) -> List[Dataset]
 
         if dataset_query_config.tags != None:
             search_query["tags"] = { "$in": list(dataset_query_config.tags) }
+
+        if dataset_query_config.primary_key_column_name != None:
+            search_query["primary_key_column_name"] = { "$regex": dataset_query_config.primary_key_column_name, "$options": "i" }
+        
+        if dataset_query_config.target_column_name != None:
+            search_query["target_column_name"] = { "$regex": dataset_query_config.target_column_name, "$options": "i" }
+
+        if (dataset_query_config.test_samples_size_min != None) or (dataset_query_config.test_samples_size_max != None):
+            test_samples_size_min = dataset_query_config.test_samples_size_min or 0
+            test_samples_size_max = dataset_query_config.test_samples_size_max or 1
+            search_query["test_samples_size"] = {
+                "$gte": test_samples_size_min,
+                "$lte": test_samples_size_max
+            }
 
         if (dataset_query_config.created_at_min != None) or (dataset_query_config.created_at_max != None):
             created_at_min = datetime.fromtimestamp(dataset_query_config.created_at_min or 0)
