@@ -46,6 +46,22 @@ async def count_many(model_query_config: ModelQueryConfig) -> Dict[str, any]:
                 "$lte": updated_at_max
             }
 
+        if (model_query_config.training_process_started_at_min != None) or (model_query_config.training_process_started_at_max != None):
+            training_process_started_at_min = datetime.fromtimestamp(model_query_config.training_process_started_at_min or 0)
+            training_process_started_at_max = datetime.fromtimestamp(model_query_config.training_process_started_at_max or int(time()))
+            count_query["training_process_started_at"] = {
+                "$gte": training_process_started_at_min,
+                "$lte": training_process_started_at_max
+            }
+
+        if (model_query_config.training_process_ended_at_min != None) or (model_query_config.training_process_ended_at_max != None):
+            training_process_ended_at_min = datetime.fromtimestamp(model_query_config.training_process_ended_at_min or 0)
+            training_process_ended_at_max = datetime.fromtimestamp(model_query_config.training_process_ended_at_max or int(time()))
+            count_query["training_process_ended_at"] = {
+                "$gte": training_process_ended_at_min,
+                "$lte": training_process_ended_at_max
+            }
+
         count = await MODEL_MONGODB_COLLECTION.count_documents(count_query)
         
         return {
@@ -100,6 +116,22 @@ async def search_many(model_query_config: ModelQueryConfig) -> List[Model]:
             search_query["updated_at"] = {
                 "$gte": updated_at_min,
                 "$lte": updated_at_max
+            }
+
+        if (model_query_config.training_process_started_at_min != None) or (model_query_config.training_process_started_at_max != None):
+            training_process_started_at_min = datetime.fromtimestamp(model_query_config.training_process_started_at_min or 0)
+            training_process_started_at_max = datetime.fromtimestamp(model_query_config.training_process_started_at_max or int(time()))
+            search_query["training_process_started_at"] = {
+                "$gte": training_process_started_at_min,
+                "$lte": training_process_started_at_max
+            }
+
+        if (model_query_config.training_process_ended_at_min != None) or (model_query_config.training_process_ended_at_max != None):
+            training_process_ended_at_min = datetime.fromtimestamp(model_query_config.training_process_ended_at_min or 0)
+            training_process_ended_at_max = datetime.fromtimestamp(model_query_config.training_process_ended_at_max or int(time()))
+            search_query["training_process_ended_at"] = {
+                "$gte": training_process_ended_at_min,
+                "$lte": training_process_ended_at_max
             }
 
         results = await (MODEL_MONGODB_COLLECTION

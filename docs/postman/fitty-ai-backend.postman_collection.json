@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"PROCESS_STARTED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000,\n    \"training_process_started_at_min\": 0,\n    \"training_process_started_at_max\": 100000000000,\n    \"training_process_ended_at_min\": 0,\n    \"training_process_ended_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -80,7 +80,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"CREATED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000\n}",
+							"raw": "{\n    \"name\": \"MyTestingClassificationModel\",\n    \"type\": \"CLASSIFICATION\",\n    \"classifier_type\": \"LOGISTIC_CLASSIFIER\",\n    \"status\": \"PROCESS_STARTED\",\n    \"tags\": [\n        \"ai\"\n    ],\n    \"created_at_min\": 0,\n    \"created_at_max\": 100000000000,\n    \"updated_at_min\": 0,\n    \"updated_at_max\": 100000000000,\n    \"training_process_started_at_min\": 0,\n    \"training_process_started_at_max\": 100000000000,\n    \"training_process_ended_at_min\": 0,\n    \"training_process_ended_at_max\": 100000000000\n}",
 							"options": {
 								"raw": {
 									"language": "json"

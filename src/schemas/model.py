@@ -6,6 +6,7 @@ from ..enums.classifier_type import ClassifierType
 from ..enums.model_status import ModelStatus
 
 class Model(BaseModel):
+    # General
     name: str = Field()
     description: str = Field()
     type: ModelType = Field()
@@ -13,8 +14,15 @@ class Model(BaseModel):
     status: ModelStatus = Field()
     tags: List[str] = Field()
     dataset_id: Optional[str] = Field(default = None)
+
+    # Timing
     created_at: datetime = Field()
     updated_at: datetime = Field()
+
+    # Logging
+    training_process_started_at: Optional[datetime] = Field(default = None)
+    training_process_ended_at: Optional[datetime] = Field(default = None)
+    training_process_logs: Optional[List[str]] = Field(default = None)
 
     class Config:
         json_schema_extra = {

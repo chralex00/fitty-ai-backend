@@ -90,7 +90,9 @@ async def start_training_process(id: str) -> JSONResponse:
         check_model_status(model_found["status"])
         
         updated_model = await update_one_model(id, {
-            "status": ModelStatus.PROCESS_STARTED
+            "status": ModelStatus.PROCESS_STARTED,
+            "training_process_started_at": datetime.fromtimestamp(int(time())),
+            "training_process_logs": []
         })
 
         if updated_model == None:
