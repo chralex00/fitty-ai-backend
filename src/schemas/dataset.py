@@ -15,6 +15,7 @@ class Dataset(BaseModel):
     primary_key_column_name: str = Field()
     target_column_name: str = Field()
     test_samples_size: float = Field()
+    file_splited_object_id: Optional[str] = Field()
 
     # Timing
     created_at: datetime = Field()
@@ -36,6 +37,7 @@ class Dataset(BaseModel):
                 "primary_key_column_name": "id",
                 "target_column_name": "y",
                 "test_samples_size": "0.25",
+                "file_splited_object_id": "mongo_id",
                 "created_at": "0",
                 "updated_at": "0"
             }

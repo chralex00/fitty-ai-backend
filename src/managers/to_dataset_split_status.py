@@ -3,7 +3,7 @@ from ..utilities.mongo_connection import GRIDFS_MONGODB
 from ..dtos.model_query_config import ModelQueryConfig
 from ..schemas.model import Model
 from ..services.model import search_many as search_model, update_one as update_one_model
-from ..services.dataset import find_one as find_one_dataset
+from ..services.dataset import find_one as find_one_dataset, update_one as update_one_dataset
 from ..enums.model_status import ModelStatus
 from ..enums.dataset_type import DatasetType
 from datetime import datetime
@@ -77,7 +77,14 @@ async def to_dataset_split_status():
             df["is_train_sample"] = df[dataset_found["primary_key_column_name"]].isin(df_train)
             df["is_test_sample"] = df[dataset_found["primary_key_column_name"]].isin(df_test)
 
-            # to do
+            byte_io = io.BytesIO()
+            df.to_csv(byte_io)
+
+            file_id = GRIDFS_MONGODB.put(byte_io)
+
+            await update_one_dataset(dataset_found["_id"], {
+                "file_splited_object_id": file_id
+            })
         except Exception as error:
             model_found["training_process_logs"].append("to_dataset_split_status(): error occurred while creating and handling the data frame for model with the id {}, the error is: {}".format(model_found["_id"], error))
             await update_one_model(model_found["_id"], {
@@ -88,7 +95,13 @@ async def to_dataset_split_status():
             logging.debug("to_dataset_split_status(): model with id {} updated to the {} status".format(model_found["_id"], ModelStatus.ERROR))
             return
 
-        # to do
+        await update_one_model(model_found["_id"], {
+            "status": ModelStatus.DATASET_SPLIT,
+            "training_process_logs": [],
+            "updated_at": datetime.fromtimestamp(int(time()))
+        })
+
+        logging.debug("to_dataset_split_status(): model with id {} updated to the {} status".format(model_found["_id"], ModelStatus.DATASET_SPLIT))
     except Exception as error:
         logging.error(f"to_dataset_split_status(): error occurred during the model training process: {error}")
         raise Exception
