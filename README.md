@@ -54,7 +54,7 @@ The `env_example` file is an example contains a simple template of the `.env` fi
 The contents of the .env file must include the following env variables:
 - `MICROSERVICE_PORT` (required, `int`): the listening port, preferably between `8000` and `9000`, like `8080`, or `8090`.
 - `MICROSERVICE_NAME` (required, `str`): the descriptive name of the microservice, or the brand name, like `fitty-ai-backend`.
-- `MICROSERVICE_VERSION` (required, `str`): the microservice's version, strictly respecting semver (semantic versioning), like `v0.0.1-rc.1`.
+- `MICROSERVICE_VERSION` (required, `str`): the microservice's version, strictly respecting semver (semantic versioning), like `0.0.1-alpha.1`.
 - `MICROSERVICE_API_PREFIX` (required, `str`): the API's prefix exposed by this microserfice, like `/api`, or `/api/v1`.
 - `MICROSERVICE_WEB_WORKERS` (optional, `int`): the number of web workers (or web processes). In local environment it should be set to `1`. Default value is `1`.
 - `MONGODB_URL` (required, `str`): the connection string to allow the microservice to connect to the MongoDB server. The connection string must be expressed in the following format: `mongodb://{username}:{password}@{host}:{port}/{dbname}`. I fyou starting this microservice locally, the username and password of the MongoDB under Docker are `user` and `password`, while the database name is `fittyaidb`.
