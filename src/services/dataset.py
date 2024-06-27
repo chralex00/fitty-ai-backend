@@ -2,7 +2,7 @@ from ..schemas.dataset import Dataset
 from ..utilities.mongo_connection import DATASET_MONGODB_COLLECTION
 from bson.objectid import ObjectId
 from pymongo.results import DeleteResult
-import logging
+from ..utilities.logging import LOGGER as logging
 from ..dtos.create_dataset_dto import CreateDatasetDto
 from ..dtos.dataset_query_config import DatasetQueryConfig
 from typing import Dict, List

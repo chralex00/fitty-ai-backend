@@ -6,7 +6,4 @@ class DatasetType(str, Enum):
     JSON = "JSON"
     XML = "XML"
     HTML = "HTML"
-    HDF = "HDF"
-    GBQ = "GBQ"
-    PICKLE = "PICKLE"
     PARQUET = "PARQUET"

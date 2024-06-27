@@ -2,7 +2,7 @@ from ..schemas.model import Model
 from ..utilities.mongo_connection import MODEL_MONGODB_COLLECTION
 from bson.objectid import ObjectId
 from pymongo.results import DeleteResult
-import logging
+from ..utilities.logging import LOGGER as logging
 from ..dtos.create_model_dto import CreateModelDto
 from ..dtos.model_query_config import ModelQueryConfig
 from typing import Dict, List

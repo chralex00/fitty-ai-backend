@@ -8,10 +8,10 @@ from ..dtos.update_dataset_dto import UpdateDatasetDto
 from ..enums.dataset_type import DatasetType
 from time import time
 from ..services.dataset import update_one as update_one_dataset, search_many as search_many_datasets, create_one as create_dataset, find_one as find_one_dataset, delete_one as delete_one_dataset, count_many as count_many_datasets
-import logging
+from ..utilities.logging import LOGGER as logging
 from datetime import datetime
 from ..utilities.mongo_connection import GRIDFS_MONGODB
-from ..constants.constants import NOT_FOUND_HTTP_EXCEPTION, INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
+from ..constants.constants import NOT_FOUND_HTTP_EXCEPTION, INTERNAL_SERVER_ERROR_HTTP_EXCEPTION, EXCEL_FILE_EXTENSIONS
 
 dataset_router = APIRouter()
 
@@ -66,6 +66,9 @@ async def upload_dataset(id: str, file: UploadFile) -> JSONResponse:
     try:
         file_type = file.filename.rsplit(".")[-1].upper()
         dataset_types = [ e.value for e in DatasetType ]
+
+        if file_type == EXCEL_FILE_EXTENSIONS:
+            file_type = DatasetType.EXCEL
 
         if not(file_type in dataset_types):
             raise HTTPException(

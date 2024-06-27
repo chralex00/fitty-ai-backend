@@ -9,7 +9,7 @@ from ..dtos.update_model_dto import UpdateModelDto
 from time import time
 from ..services.model import update_one as update_one_model, search_many as search_model, create_one as create_model, find_one as find_one_model, delete_one as delete_one_model, count_many as count_model
 from ..services.dataset import find_one as find_one_dataset
-import logging
+from ..utilities.logging import LOGGER as logging
 from datetime import datetime
 from ..utilities.check_model_type import check_model_type
 from ..utilities.check_model_status import check_model_status

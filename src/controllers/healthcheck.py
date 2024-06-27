@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, HTTPException
 from ..utilities.env_vars import ENV_VARS
 from typing import Dict
-import logging
+from ..utilities.logging import LOGGER as logging
 from ..constants.constants import INTERNAL_SERVER_ERROR_HTTP_EXCEPTION
 
 healthcheck_router = APIRouter()
