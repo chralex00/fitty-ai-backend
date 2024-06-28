@@ -77,10 +77,11 @@ async def to_dataset_split_status():
             df["is_train_sample"] = df[dataset_found["primary_key_column_name"]].isin(df_train)
             df["is_test_sample"] = df[dataset_found["primary_key_column_name"]].isin(df_test)
 
-            byte_io = io.BytesIO()
-            df.to_csv(byte_io)
+            buffer = io.BytesIO()
+            df.to_csv(buffer)
+            buffer.seek(0)
 
-            file_id = GRIDFS_MONGODB.put(byte_io)
+            file_id = GRIDFS_MONGODB.put(buffer)
 
             await update_one_dataset(dataset_found["_id"], {
                 "file_splited_object_id": file_id

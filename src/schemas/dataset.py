@@ -15,7 +15,7 @@ class Dataset(BaseModel):
     primary_key_column_name: str = Field()
     target_column_name: str = Field()
     test_samples_size: float = Field()
-    file_splited_object_id: Optional[str] = Field()
+    file_splited_object_id: Optional[str] = Field(default = None)
 
     # Timing
     created_at: datetime = Field()
