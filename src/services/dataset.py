@@ -27,6 +27,9 @@ async def count_many(dataset_query_config: DatasetQueryConfig) -> Dict[str, any]
         if dataset_query_config.primary_key_column_name != None:
             count_query["primary_key_column_name"] = { "$regex": dataset_query_config.primary_key_column_name, "$options": "i" }
         
+        if dataset_query_config.features_column_names != None:
+            count_query["features_column_names"] = { "$in": list(dataset_query_config.features_column_names) }
+
         if dataset_query_config.target_column_name != None:
             count_query["target_column_name"] = { "$regex": dataset_query_config.target_column_name, "$options": "i" }
 

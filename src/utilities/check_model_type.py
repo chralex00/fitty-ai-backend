@@ -20,10 +20,14 @@ def check_model_type(model_type: ModelType, classifier_type: ClassifierType):
         )
     
     regression_types = [
-        ClassifierType.LINEAR_REGRESSION.value,
-        ClassifierType.K_NEIGHBORS_REGRESSION.value,
-        ClassifierType.DECISION_TREE_REGRESSION.value,
-        ClassifierType.MULTILAYER_PERCEPTRON_REGRESSION.value
+        ClassifierType.LINEAR_REGRESSOR.value,
+        ClassifierType.LASSO_REGRESSOR.value,
+        ClassifierType.RIDGE_REGRESSOR.value,
+        ClassifierType.ELASTIC_NETWORK_REGRESSOR.value,
+        ClassifierType.KNN_REGRESSOR.value,
+        ClassifierType.DECISION_TREE_REGRESSOR.value,
+        ClassifierType.RANDOM_FOREST_REGRESSOR.value,
+        ClassifierType.MULTILAYER_PERCEPTRON_REGRESSOR.value
     ]
     if (model_type == ModelType.REGRESSION) and not(classifier_type in regression_types):
         raise HTTPException(

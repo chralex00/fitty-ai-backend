@@ -61,7 +61,8 @@ async def create_one(createModelDto: CreateModelDto = Body()) -> JSONResponse:
             tags = list(createModelDto.tags),
             created_at = datetime.fromtimestamp(int(time())),
             updated_at = datetime.fromtimestamp(int(time())),
-            dataset_id = dataset_id
+            dataset_id = dataset_id,
+            hyperparameters = createModelDto.hyperparameters
         )
 
         created_model = await create_model(model)

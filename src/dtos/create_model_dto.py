@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, Set
+from typing import Optional, Set, Dict
 from ..enums.model_type import ModelType
 from ..enums.classifier_type import ClassifierType
 
@@ -10,6 +10,7 @@ class CreateModelDto(BaseModel):
     classifier_type: ClassifierType = Field()
     tags: Set[str] = Field(min_length = 0, max_length = 15)
     dataset_id: Optional[str] = Field(default = None)
+    hyperparameters: Optional[Dict] = Field(default = {})
 
     class Config:
         json_schema_extra = {
@@ -23,6 +24,9 @@ class CreateModelDto(BaseModel):
                     "classification",
                     "perceptron",
                     "ai"
-                )
+                ),
+                "hyperparameters": {
+                    "max_iter": "500"
+                }
             }
         }

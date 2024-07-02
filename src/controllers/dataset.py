@@ -45,6 +45,7 @@ async def create_one(createDatasetDto: CreateDatasetDto = Body()) -> JSONRespons
             tags = list(createDatasetDto.tags),
             primary_key_column_name = createDatasetDto.primary_key_column_name,
             target_column_name = createDatasetDto.target_column_name,
+            features_column_names = createDatasetDto.features_column_names,
             test_samples_size = createDatasetDto.test_samples_size,
             created_at = datetime.fromtimestamp(int(time())),
             updated_at = datetime.fromtimestamp(int(time()))

@@ -136,7 +136,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"MyTestingRegressionModel\",\n    \"description\": \"A regression model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LINEAR_REGRESSION\",\n    \"tags\": [ \"test\", \"regression\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": null\n}",
+							"raw": "{\n    \"name\": \"MyTestingRegressionModel\",\n    \"description\": \"A regression model for testing purposes\",\n    \"type\": \"REGRESSION\",\n    \"classifier_type\": \"LINEAR_REGRESSOR\",\n    \"tags\": [ \"test\", \"regression\", \"perceptron\", \"ai\" ],\n    \"dataset_id\": null\n}",
 							"options": {
 								"raw": {
 									"language": "json"

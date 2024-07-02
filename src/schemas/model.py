@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Dict
 from ..enums.model_type import ModelType
 from ..enums.classifier_type import ClassifierType
 from ..enums.model_status import ModelStatus
@@ -14,6 +14,10 @@ class Model(BaseModel):
     status: ModelStatus = Field()
     tags: List[str] = Field()
     dataset_id: Optional[str] = Field(default = None)
+    hyperparameters: Dict = Field(default = {})
+
+    # Training Process
+    trained_model_file_id: Optional[str] = Field(default = None)
 
     # Timing
     created_at: datetime = Field()
@@ -25,6 +29,7 @@ class Model(BaseModel):
     training_process_logs: Optional[List[str]] = Field(default = None)
 
     class Config:
+        arbitrary_types_allowed = True
         json_schema_extra = {
             "example": {
                 "name": "MyTestingClassificationModel",
@@ -39,6 +44,10 @@ class Model(BaseModel):
                     "ai"
                 ),
                 "dataset_id": "mongo_id",
+                "hyperparameters": {
+                    "max_iter": "500"
+                },
+                "trained_model_file_id": "mongo_id",
                 "created_at": "0",
                 "updated_at": "0"
             }

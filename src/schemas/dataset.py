@@ -13,6 +13,7 @@ class Dataset(BaseModel):
 
     # Test & Train Subsets
     primary_key_column_name: str = Field()
+    features_column_names: List[str] = Field()
     target_column_name: str = Field()
     test_samples_size: float = Field()
     file_splited_object_id: Optional[str] = Field(default = None)
@@ -35,6 +36,13 @@ class Dataset(BaseModel):
                 ),
                 "file_object_id": "mongo_id",
                 "primary_key_column_name": "id",
+                "features_column_names": [
+                    "feature_1",
+                    "feature_2",
+                    "feature_3",
+                    "...",
+                    "feature_n"
+                ],
                 "target_column_name": "y",
                 "test_samples_size": "0.25",
                 "file_splited_object_id": "mongo_id",
